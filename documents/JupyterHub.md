@@ -94,3 +94,11 @@ Automatically delete old "latest" environments, but not *immediately*. Notebooks
 that have been running for a couple days will still be attached to the
 environment that was newest *when they started* and that environment should not
 be ripped out from underneath them while they are still running.
+
+The story for deploying a fix to some library like sixtools for users then, is:
+* Merge a PR with a fix.
+* Tag the project (and employ CI/CD tools to automatically create a package on
+  PyPI / conda).
+* Click the "Build a new latest environment!" button and wait for it to run.
+* Tell the user to restart their kernel, which will automatically bind to the
+  updated environment with the new release of the library.
