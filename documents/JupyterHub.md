@@ -2,7 +2,7 @@
 
 ## Goals
 - Make it easy for BL staff to deploy new environments+kernels and make them
-  available to their users. It currently possible to make custom environments
+  available to their users. It is currently possible to make custom environments
   for personal use, but the only way to _share_ them is to say, "Run these conda
   and ipykernel commands," which is not streamlined enough for general users.
 - Provide long-term (~3 year) support for kernels. An old notebook should be able to start
@@ -34,7 +34,7 @@ Currently SDCC is taking a "wait and see" approach. Any kernel (or process in
 general) that allocates 16 GB of RAM is killed. In the short term this is
 sufficient. In the longer term, once NSLS-II has its own Hub, we could consider
 Docker or even Kubernetes for resource limiting. Another possiblity is "systemd
-spawner" but its resoruce limiting is known to be quirky.
+spawner" but its resource limiting is known to be quirky.
 (See [this talk](https://research.cs.wisc.edu/htcondor/HTCondorWeek2017/presentations/WedDownes_cgroups.pdf).)
 
 ## Data Access
@@ -43,7 +43,7 @@ spawner" but its resoruce limiting is known to be quirky.
 
 Users will access all data through databroker. Currently, that means using
 databroker's Python API to load the data into a Python process and either work
-on it their or export it to files. In time, an HTTP API, a web interface, and
+on it there or export it to files. In time, an HTTP API, a web interface, and
 other GUI interfaces will be developed by DAMA and other bluesky collaborators.
 
 ### Databases
