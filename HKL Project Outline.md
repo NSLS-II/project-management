@@ -3,12 +3,27 @@ Work relating to HKL
 I think the first step here is to decide on a common 'hkl_object' and an approach to defining them. The current 'hkl_objects' provided by `hklpy` do not yet satisfy all of the requirements, but do form a good basis.
 
 ### Requirements for all diffractometer `hkl_object`'s based on requirements from CSX, CHX, J-PLS and ISR
-
+(items without a current solution are in **bold**)
 - [ ] Be able to find the current location in reciprocal-space (hkl) and real-space values.
     - this can be done by the 2 commands:
     ```
     hkl_object.position  # reciprocal space position in hkl co-ordinates.
     hkl_object.real_postiion  # real-space position.
+    ```
+- [ ] Be able to define a sample geometry
+    - This can be done by using the steps:
+    ```
+    # import the hkl Lattice object
+    from hkl.util import Lattice
+
+    # Define a lattice, lengths are in Angstrom, angles are in degrees
+    lattice = Lattice(a=9.069, b=9.069, c=10.390, alpha=90.0, beta=90.0, gamma=120.0)
+
+    # add the sample to the calculation engine
+    hkl_object.calc.new_sample('some_sample', lattice=lattice)
+    
+    # the sample geometry is then defined in
+    hkl_object.calc.sample
     ```
 - [ ] Be able to calculate the sample orientation based on a known real_space and reciprocal_space location.
     - The main 'use case' for this is, a reflection (and hence the values of h,k,l) has been found at a defined 'real space' location which does not match the calculated value. This is most likely related to sample 'misalignment' in that one or more of the defined lattice angles is out by some 'offset' value.
