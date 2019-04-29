@@ -36,9 +36,13 @@ I think the first step here is to decide on a common 'hkl_object' and an approac
     hkl_object.calc.sample.UB
     ```
     
-    - Note 1: I suspect we will want to add a method `hkl_object.calc.add_current_reflection(h,k,l)` which uses the current real axis location and then calls hkl_object.calc.sampl.add_reflection()`
-    - Note 2: we probably also want to be able to use the 'Beamline energy' in the calculation instead of the stored 'energy' (but also have the option of not using it).
-    
+    - Note 1: I suspect we will want to add a method `hkl_object.calc.add_current_reflection(h,k,l)` which uses the current real axis location and then calls hkl_object.calc.sample.add_reflection()`
+
+- [ ] **To be able to use the 'Beamline energy' in the calculation instead of the stored 'energy' (but also have the option of not using it)**.
+    - I am not yet sure of exactly how to accomplish this, just throwing out ideas I can think of the following ways:
+        1. an attribute that 'turns on or off' the link between `hkl_object.calc.sample.energy` and the beamlines energy object.
+        2. add an `energy` kwarg to `hkl_object.calc.forward`, `hkl_object.calc.reverse` and `hkl_object.sample.compute_UB`. The default of such a kwarg should be `None` and in the case that `energy=None` the Beamlines 'energy' object value is used.
+        3. add duplicates of `hkl_object.calc.forward`, `hkl_object.calc.reverse` and `hkl_object.sample.compute_UB` that use the beamlines energy ophyd object value instead of hkl_object.calc.sample.energy.
 - [ ] Be able to calculate real-space values given the reciprocal-space (hkl) values and vice-versa.
     - This can be done using the built-in hkl methods:
     ```
@@ -58,18 +62,18 @@ I think the first step here is to decide on a common 'hkl_object' and an approac
 
 - [ ] Be able to choose _geometry modes_ for each of the diffractometers (which defines which rotation stages to include in calculations and motions).
     - This is probably what is done with the `hkl_object.calc.engine.mode` which must be one of `hkl_object.calc.engine.modes`
-    - We should however check with ISR that the required 'modes' are defined here for their systems.
+    - We should however check with ISR that the required 'modes' are defined here for their systems, and decide how to proceed if they are not.
 - [ ] Be able to move the diffractometer to a given (hkl) position.
     - This can be done via the following:
     ```
     hkl_object.move(h,k,l)  # move to these 'h,k,l' co-ordinates
     ```
-- [ ] Be able to, at a minimum, perform `scan`'s and `grid_scan`'s  in reciprocal space.
+- [ ] **Be able to, at a minimum, perform `scan`'s and `grid_scan`'s  in reciprocal space.**
     - Note: In addition to scanning in 'reciprocal space' a request for 'energy' scanning with 'fixed Q' has also been made (by ISR).
          - This would involve fixed h,k,l and therefore non- fixed real-space locations (as the h,k,l calculation relies on photon energy).
         - This would also require us to 'couple' the beamlines 'photon energy' to the`hkl_objects` photon wavelength found at `hkl_object.calc.wavelength`.
         
-- [ ] Although the current implementation does allow for most of the requested use cases I think their are a few changes that will greatly improve the usability of this system(scanning in `hkl` co-ordinates is still not clear to me).
+- [ ] **Although the current implementation does allow for most of the requested use cases I think their are a few changes that will greatly improve the usability of this system(scanning in `hkl` co-ordinates is still not clear to me)**.
     1. produce a clear 'guide to using hkl' that shows step by step how to perform each of the items above.
     2. look at creating linking 'shortcuts' to some of the parameters so they are not 'hidden by obscurity', and to simplify the UI a little. For example:
     ```
